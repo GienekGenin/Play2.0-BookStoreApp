@@ -26,4 +26,11 @@ public class HomeController extends Controller {
         return ok(views.html.tutorial.render());
     }
 
+    public Result about() {
+        return ok(views.html.about.render());
+    }
+
+    public Result welcome(String name) {
+        return ok(name);
+    }
 }
