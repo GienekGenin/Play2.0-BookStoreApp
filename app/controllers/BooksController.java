@@ -1,14 +1,21 @@
 package controllers;
 
 import models.Book;
+import play.data.Form;
+import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import views.html.Books.index;
+import views.html.Books.create;
 
+import javax.inject.Inject;
 import java.util.Set;
 
 public class BooksController extends Controller {
+
+    @Inject
+    FormFactory formFactory;
 
     // Show all books
     public Result index() {
@@ -16,9 +23,10 @@ public class BooksController extends Controller {
         return ok(index.render(books));
     }
 
-    // Create book
+    // Create form for book
     public Result create() {
-        return TODO;
+        Form<Book> bookForm = formFactory.form(Book.class);
+        return ok(create.render(bookForm));
     }
 
     // Save book

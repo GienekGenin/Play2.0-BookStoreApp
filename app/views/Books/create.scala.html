@@ -1,0 +1,23 @@
+@(bookForm: Form[Book])
+@import helper._
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Create book</title>
+    </head>
+    <body>
+        <h1>Add new book</h1>
+        @helper.form(action = routes.BooksController.save()) {
+            @helper.inputText(bookForm("id"))
+            @helper.inputText(bookForm("title"))
+            @helper.inputText(bookForm("price"))
+            @helper.inputText(bookForm("author"))
+
+            <input type="submit" value="Create book">
+            }
+    </body>
+</html>
