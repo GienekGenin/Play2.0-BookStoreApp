@@ -30,8 +30,13 @@ public class BooksController extends Controller {
     }
 
     // Save book
+    // TODO: issue -> form returns null for all params
     public Result save() {
-        return TODO;
+        Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
+        Book book = bookForm.get();
+        Book.add(book);
+        System.out.println("Book: " + book.title + " : " + book.id);
+        return redirect(routes.BooksController.index());
     }
 
     // Edit book
