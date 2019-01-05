@@ -1,13 +1,19 @@
 package controllers;
 
+import models.Book;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import views.html.Books.index;
+
+import java.util.Set;
 
 public class BooksController extends Controller {
 
     // Show all books
     public Result index() {
-        return TODO;
+        Set<Book> books = Book.allBooks();
+        return ok(index.render(books));
     }
 
     // Create book
