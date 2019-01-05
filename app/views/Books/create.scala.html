@@ -12,7 +12,7 @@
         <title>Create book</title>
     </head>
     <body>
-        <h1>Add new book 1</h1>
+        <h1>Add new book</h1>
         @helper.form(action = routes.BooksController.save()) {
             @helper.inputText(bookForm("id"))
             @helper.inputText(bookForm("title"))

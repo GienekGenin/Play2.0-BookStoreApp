@@ -30,12 +30,15 @@ public class BooksController extends Controller {
     }
 
     // Save book
-    // TODO: issue -> form returns null for all params
+    // TODO: find better way for getting values from form
     public Result save() {
         Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
-        Book book = bookForm.get();
+        String id = bookForm.field("id").getValue().orElse("not present");
+        String title = bookForm.field("title").getValue().orElse("not present");
+        String price = bookForm.field("price").getValue().orElse("not present");
+        String author = bookForm.field("author").getValue().orElse("not present");
+        Book book = new Book(Integer.parseInt(id), title, Integer.parseInt(price), author);
         Book.add(book);
-        System.out.println("Book: " + book.title + " : " + book.id);
         return redirect(routes.BooksController.index());
     }
 
@@ -55,7 +58,7 @@ public class BooksController extends Controller {
     }
 
     // Display single book
-    public Result show(Integer id){
+    public Result show(Integer id) {
         return TODO;
     }
 }
