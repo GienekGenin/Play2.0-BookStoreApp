@@ -1,21 +1,14 @@
 @(book: Book)
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>@book.title</title>
-    </head>
-    <body>
-        <h3>title1: @book.title</h3>
-        <ul>
-            <li>id: @book.id</li>
-            <li>price: @book.price</li>
-            <li>author: @book.author</li>
-        </ul>
-        <a href="@routes.BooksController.edit(book.id)">Edit</a>
-        <a href="@routes.BooksController.destroy(book.id)">Delete book</a>
-    </body>
-</html>
+@import views.html.templates.layout;
+
+@layout("Selected book"){
+    <h3>title1: @book.title</h3>
+    <ul>
+        <li>id: @book.id</li>
+        <li>price: @book.price</li>
+        <li>author: @book.author</li>
+    </ul>
+    <a href="@routes.BooksController.edit(book.id)">Edit</a>
+    <a href="@routes.BooksController.destroy(book.id)">Delete book</a>
+}
