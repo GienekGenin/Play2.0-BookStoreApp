@@ -9,6 +9,7 @@ import play.mvc.Result;
 import views.html.Books.index;
 import views.html.Books.create;
 import views.html.Books.edit;
+import views.html.Books.show;
 
 import javax.inject.Inject;
 import java.util.Set;
@@ -79,6 +80,10 @@ public class BooksController extends Controller {
 
     // Display single book
     public Result show(Integer id) {
-        return TODO;
+        Book book = Book.findById(id);
+        if(book == null){
+            return notFound("Book not found");
+        }
+        return ok(show.render(book));
     }
 }
