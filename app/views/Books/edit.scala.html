@@ -1,5 +1,7 @@
 @(bookForm: Form[Book], book: Book)
 
+@import helper.CSRF.formField
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -35,7 +37,7 @@
                     <input type="text" id="author" name="author" value=@book.author>
                 </dd>
             </dl>
-            <input type="hidden" name="csrfToken" value="0982bf60cab353a3d16d14f24a0d7ce85c7ae458-1546771078520-6ad5bd7796c46732783da03f">
+            @helper.CSRF.formField
             <input type="submit" value="Edit book">
         </form>
     </body>

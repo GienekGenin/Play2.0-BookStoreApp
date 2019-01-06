@@ -19,6 +19,14 @@ public class BooksController extends Controller {
     @Inject
     FormFactory formFactory;
 
+    private Book getBookFromForm(Form<Book> bookForm){
+        String id = bookForm.field("id").getValue().orElse("not present");
+        String title = bookForm.field("title").getValue().orElse("not present");
+        String price = bookForm.field("price").getValue().orElse("not present");
+        String author = bookForm.field("author").getValue().orElse("not present");
+        return new Book(Integer.parseInt(id), title, Integer.parseInt(price), author);
+    }
+
     // Show all books
     public Result index() {
         Set<Book> books = Book.allBooks();
@@ -35,11 +43,7 @@ public class BooksController extends Controller {
     // TODO: find better way for getting values from form
     public Result save() {
         Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
-        String id = bookForm.field("id").getValue().orElse("not present");
-        String title = bookForm.field("title").getValue().orElse("not present");
-        String price = bookForm.field("price").getValue().orElse("not present");
-        String author = bookForm.field("author").getValue().orElse("not present");
-        Book book = new Book(Integer.parseInt(id), title, Integer.parseInt(price), author);
+        Book book = getBookFromForm(bookForm);
         Book.add(book);
         return redirect(routes.BooksController.index());
     }
@@ -58,18 +62,17 @@ public class BooksController extends Controller {
     // Update book
     public Result update() {
         Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
-        String id = bookForm.field("id").getValue().orElse("not present");
-        String title = bookForm.field("title").getValue().orElse("not present");
-        String price = bookForm.field("price").getValue().orElse("not present");
-        String author = bookForm.field("author").getValue().orElse("not present");
-        Book oldBook = Book.findById(Integer.parseInt(id));
+        Book book = getBookFromForm(bookForm);
+        Book oldBook = Book.findById(book.id);
         if(oldBook == null){
             return notFound("Book not found");
         }
-        oldBook.id = Integer.parseInt(id);
-        oldBook.title = title;
-        oldBook.price = Integer.parseInt(price);
-        oldBook.author = author;
+        if(!oldBook.equals(book)){
+            oldBook.id = book.id;
+            oldBook.title = book.title;
+            oldBook.author = book.author;
+            oldBook.price = book.price;
+        }
         return redirect(routes.BooksController.index());
     }
 
