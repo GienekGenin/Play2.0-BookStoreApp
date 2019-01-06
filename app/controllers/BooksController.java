@@ -56,7 +56,20 @@ public class BooksController extends Controller {
 
     // Update book
     public Result update() {
-        return TODO;
+        Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
+        String id = bookForm.field("id").getValue().orElse("not present");
+        String title = bookForm.field("title").getValue().orElse("not present");
+        String price = bookForm.field("price").getValue().orElse("not present");
+        String author = bookForm.field("author").getValue().orElse("not present");
+        Book oldBook = Book.findById(Integer.parseInt(id));
+        if(oldBook == null){
+            return notFound("Book not found");
+        }
+        oldBook.id = Integer.parseInt(id);
+        oldBook.title = title;
+        oldBook.price = Integer.parseInt(price);
+        oldBook.author = author;
+        return redirect(routes.BooksController.index());
     }
 
     // Delete book
