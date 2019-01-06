@@ -1,0 +1,42 @@
+@(bookForm: Form[Book], book: Book)
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Edit book</title>
+    </head>
+    <body>
+        <h1>Edit book</h1>
+        <form action="/books/edit" method="POST">
+            <dl class=" " id="id_field">
+                <dt><label for="id">id</label></dt>
+                <dd>
+                    <input type="text" id="id" name="id" value=@book.id>
+                </dd>
+            </dl>
+            <dl class=" " id="title_field">
+                <dt><label for="title">title</label></dt>
+                <dd>
+                    <input type="text" id="title" name="title" value=@book.title>
+                </dd>
+            </dl>
+            <dl class=" " id="price_field">
+                <dt><label for="price">price</label></dt>
+                <dd>
+                    <input type="text" id="price" name="price" value=@book.price>
+                </dd>
+            </dl>
+            <dl class=" " id="author_field">
+                <dt><label for="author">author</label></dt>
+                <dd>
+                    <input type="text" id="author" name="author" value=@book.author>
+                </dd>
+            </dl>
+            <input type="hidden" name="csrfToken" value="0982bf60cab353a3d16d14f24a0d7ce85c7ae458-1546771078520-6ad5bd7796c46732783da03f">
+            <input type="submit" value="Edit book">
+        </form>
+    </body>
+</html>

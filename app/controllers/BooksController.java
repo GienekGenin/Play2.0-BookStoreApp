@@ -8,6 +8,7 @@ import play.mvc.Result;
 
 import views.html.Books.index;
 import views.html.Books.create;
+import views.html.Books.edit;
 
 import javax.inject.Inject;
 import java.util.Set;
@@ -44,7 +45,13 @@ public class BooksController extends Controller {
 
     // Edit book
     public Result edit(Integer id) {
-        return TODO;
+        Book book = Book.findById(id);
+        if (book == null) {
+            return notFound("Book not found");
+        }
+        // TODO: .fill(book) not working
+        Form<Book> bookForm = formFactory.form(Book.class);
+        return ok(edit.render(bookForm, book));
     }
 
     // Update book
