@@ -9,11 +9,13 @@
         <title>@book.title</title>
     </head>
     <body>
-        <h3>title: @book.title</h3>
+        <h3>title1: @book.title</h3>
         <ul>
             <li>id: @book.id</li>
             <li>price: @book.price</li>
             <li>author: @book.author</li>
         </ul>
+        <a href="@routes.BooksController.edit(book.id)">Edit</a>
+        <a href="@routes.BooksController.destroy(book.id)">Delete book</a>
     </body>
 </html>
