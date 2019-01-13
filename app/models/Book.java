@@ -1,11 +1,10 @@
 package models;
 
+import io.ebean.Finder;
 import io.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class Book extends Model {
@@ -16,42 +15,12 @@ public class Book extends Model {
     public Integer price;
     public String author;
 
-    public Book(){}
+    public static Finder<Integer,  Book> find = new Finder<>(Book.class);
 
     public Book(Integer id, String title, Integer price, String author) {
-        this.id = id;
+        this.id  = id;
         this.title = title;
         this.price = price;
         this.author = author;
-    }
-
-    private static Set<Book> books;
-
-    static {
-        books = new HashSet<>();
-        books.add(new Book(1, "C++", 10, "Alu"));
-        books.add(new Book(2, "Java", 11, "Mag"));
-        books.add(new Book(3, "JavaScript", 12, "Gish"));
-    }
-
-    public static Set<Book> allBooks() {
-        return books;
-    }
-
-    public static Book findById(Integer id) {
-        for (Book book : books) {
-            if (id.equals(book.id)) {
-                return book;
-            }
-        }
-        return null;
-    }
-
-    public static void add(Book book) {
-        books.add(book);
-    }
-
-    public static boolean remove(Book book) {
-        return books.remove(book);
     }
 }

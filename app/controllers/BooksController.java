@@ -12,6 +12,7 @@ import views.html.Books.edit;
 import views.html.Books.show;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Set;
 
 public class BooksController extends Controller {
@@ -19,7 +20,7 @@ public class BooksController extends Controller {
     @Inject
     FormFactory formFactory;
 
-    private Book getBookFromForm(Form<Book> bookForm){
+    private Book getBookFromForm(Form<Book> bookForm) {
         String id = bookForm.field("id").getValue().orElse("not present");
         String title = bookForm.field("title").getValue().orElse("not present");
         String price = bookForm.field("price").getValue().orElse("not present");
@@ -29,7 +30,7 @@ public class BooksController extends Controller {
 
     // Show all books
     public Result index() {
-        Set<Book> books = Book.allBooks();
+        List<Book> books = Book.find.all();
         return ok(index.render(books));
     }
 
@@ -44,13 +45,13 @@ public class BooksController extends Controller {
     public Result save() {
         Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
         Book book = getBookFromForm(bookForm);
-        Book.add(book);
+        book.save();
         return redirect(routes.BooksController.index());
     }
 
     // Edit book
     public Result edit(Integer id) {
-        Book book = Book.findById(id);
+        Book book = Book.find.byId(id);
         if (book == null) {
             return notFound("Book not found");
         }
@@ -63,33 +64,40 @@ public class BooksController extends Controller {
     public Result update() {
         Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
         Book book = getBookFromForm(bookForm);
-        Book oldBook = Book.findById(book.id);
-        if(oldBook == null){
+        Book oldBook = Book.find.byId(book.id);
+        if (oldBook == null) {
             return notFound("Book not found");
         }
-        if(!oldBook.equals(book)){
+        if(!oldBook.id.equals(book.id)){
             oldBook.id = book.id;
-            oldBook.title = book.title;
+        }
+        if(!oldBook.author.equals(book.author)){
             oldBook.author = book.author;
+        }
+        if(!oldBook.title.equals(book.title)){
+            oldBook.title = book.title;
+        }
+        if(!oldBook.price.equals(book.price)){
             oldBook.price = book.price;
         }
+        oldBook.save();
         return redirect(routes.BooksController.index());
     }
 
     // Delete book
     public Result destroy(Integer id) {
-        Book book = Book.findById(id);
-        if(book == null){
+        Book book = Book.find.byId(id);
+        if (book == null) {
             return notFound("Book not found");
         }
-        Book.remove(book);
+        book.delete();
         return redirect(routes.BooksController.index());
     }
 
     // Display single book
     public Result show(Integer id) {
-        Book book = Book.findById(id);
-        if(book == null){
+        Book book = Book.find.byId(id);
+        if (book == null) {
             return notFound("Book not found");
         }
         return ok(show.render(book));
